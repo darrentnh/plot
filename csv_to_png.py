@@ -12,7 +12,7 @@ from datetime import datetime
 
 @click.command()
 @click.option('--input', '-i',
-			default=r'csv\measurements.csv',
+			default=r'csv/measurements.csv',
 			help='Input filename of the csv (default=csv\measurements.csv).')
 @click.option('--output', '-o',
 			default="images/fig-{}.png".format(datetime.now().strftime('%d_%m_%Y_%H_%M_%S')),
@@ -45,7 +45,7 @@ def convert(input, output, resolution, save):
 	                    line_shape='spline'))
 	fig.add_trace(go.Scatter(x=df2.index, y=df2["Weight"],
 	                    mode='lines+markers',
-	                    name='spline',
+	                    name='weekly',
 	                    line_shape='spline'))
 	# fig.add_trace(go.Scatter(x=df3.index, y=df3["Weight"],
 	#                     mode='lines+markers',
