@@ -11,18 +11,18 @@ import plotly.graph_objects as go
 from datetime import datetime
 
 @click.command()
-@click.option('--input',
+@click.option('--input', '-i',
 			default=r'csv\measurements.csv',
-			help='Input filename of the csv. (default=measurements.csv)')
-@click.option('--output',
+			help='Input filename of the csv (default=csv\measurements.csv).')
+@click.option('--output', '-o',
 			default="images/fig-{}.png".format(datetime.now().strftime('%d_%m_%Y_%H_%M_%S')),
 			help='Output filename.')
-@click.option('--resolution',
-			default=5,
-			help='Quality of the resulting png. (default=5)')
-@click.option('--save',
-			default="yes",
-			help='Save static output as png. (default=yes)')
+@click.option('--resolution', '-r',
+			default=5.0,
+			help='Quality of the resulting png (default=5.0).')
+@click.option('--save/--no-save',
+			default=True,
+			help='Save static output as png (default=True).')
 def convert(input, output, resolution, save):
 	## Read csv from file and clean it
 	try:
@@ -54,7 +54,7 @@ def convert(input, output, resolution, save):
 	fig.show()
 
 	## Saving figure
-	if save == "yes":
+	if save:
 		fig.write_image(output, scale=5)
 		click.echo("Image saved as {}".format(output))
 
@@ -64,8 +64,3 @@ if __name__ == "__main__":
 		convert()
 	except Exception as e:
 		click.echo(e)
-
-
-
-
-
