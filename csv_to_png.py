@@ -12,7 +12,7 @@ from datetime import datetime
 
 @click.command()
 @click.option('--input',
-			default='measurements.csv',
+			default=r'csv\measurements.csv',
 			help='Input filename of the csv. (default=measurements.csv)')
 @click.option('--output',
 			default="images/fig-{}.png".format(datetime.now().strftime('%d_%m_%Y_%H_%M_%S')),
@@ -25,12 +25,15 @@ from datetime import datetime
 			help='Save static output as png. (default=yes)')
 def convert(input, output, resolution, save):
 	## Read csv from file and clean it
-	df = pd.read_csv(r'measurements.csv')
-	df = df.iloc[:1].transpose()
-	df = df.rename(columns={0: "Weight"})
-	df = df.rename_axis("Date", axis="columns")
+	try:
+		df = pd.read_csv(input)
+		click.echo('Successfully read csv.')
+	except Exception as e:
+		click.echo(e)
+		return
+	# df = df.rename(columns={'0': 'Date', '1': 'Weight'})
+	df = df.set_index('Date')
 	df.index = pd.DatetimeIndex(data=df.index, dayfirst=True)
-	click.echo("Successfully read csv.")
 	df2 = pd.DataFrame(df['Weight'].resample('W').mean())
 	df3 = pd.DataFrame(df['Weight'].resample('M').mean())
 
