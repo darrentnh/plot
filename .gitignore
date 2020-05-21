@@ -1,5 +1,7 @@
-*.png
 /images/*
-setup.py
 /.ipynb_checkpoints/*
+/.vscode
+
 *.ipynb
+*.png
+setup.py
